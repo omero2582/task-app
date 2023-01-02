@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Overview from "./Overview";
 
 class App extends Component {
   constructor(props){
@@ -17,20 +18,24 @@ class App extends Component {
 
   submitTask = (e) => {
     e.preventDefault();
-    console.log(this.state.input);
+    this.setState((state, props) => {
+      return {
+        tasks: [...state.tasks, state.input]
+      }
+    });
   }
 
   render() {
     return (
       <div className="App">
         <form onSubmit={this.submitTask}>
-          <label htmlFor="task">Task:</label>
-          <input onChange={this.inputTask} name="task" id="task"/>
+          <label>Task:
+            <input onChange={this.inputTask} value={this.state.value}/>
+          </label>
           <button>Submit</button>
         </form>
         <div className="inputOut">{this.state.input}</div>
-        <div className='title'>My Tasks</div>
-        <div className="allTasks"></div>
+        <Overview tasks = {this.state.tasks}/>
       </div>
     );
   }
