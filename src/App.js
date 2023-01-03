@@ -51,3 +51,6 @@ class App extends Component {
 }
 
 export default App;
+// TODO
+// read react document 7. Conditional Rendering and 8. List and Keys
+// then attempt last section of Odin Project easy #2 - removing items and hard #1 
