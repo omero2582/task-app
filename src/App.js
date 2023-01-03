@@ -5,37 +5,46 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      tasks: [],
-      input: '',
-    }
+      newTask: {
+        text: '',
+        id: crypto.randomUUID(),
+      },
+      tasks: []
+    };
   }
 
   inputTask = (e) => {
     this.setState({
-      input: e.target.value,
+      newTask: {
+        text: e.target.value,
+        id: this.state.newTask.id,
+      }
     }); 
-  }
+  };
 
   submitTask = (e) => {
     e.preventDefault();
-    this.setState((state, props) => {
-      return {
-        tasks: [...state.tasks, state.input]
-      }
+    this.setState({
+        tasks: this.state.tasks.concat(this.state.newTask),
+        newTask: {
+          text: '',
+          id: crypto.randomUUID(),
+        },
     });
-  }
+  };
 
   render() {
+    let { newTask, tasks } = this.state;
     return (
       <div className="App">
         <form onSubmit={this.submitTask}>
           <label>Task:
-            <input onChange={this.inputTask} value={this.state.value}/>
+            <input onChange={this.inputTask} value={newTask.text}/>
           </label>
           <button>Submit</button>
         </form>
-        <div className="inputOut">{this.state.input}</div>
-        <Overview tasks = {this.state.tasks}/>
+        <div className="inputOut">{newTask.text}</div>
+        <Overview tasks = {tasks}/>
       </div>
     );
   }

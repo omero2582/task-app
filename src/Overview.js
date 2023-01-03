@@ -12,9 +12,10 @@ class Overview extends Component {
     return (
       <div>
         <div className='title'>My Tasks</div>
-        <div className="allTasks">
-          {this.props.tasks.map((task, i) => <div key={crypto.randomUUID()}>{`${i+1}. ${task}`}</div>)}
-        </div>
+        <ol className="allTasks">
+          {this.props.tasks
+                    .map((task) => <li key={task.id}>{task.text}</li>)}
+        </ol>
       </div>
     );
   }
