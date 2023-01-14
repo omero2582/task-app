@@ -14,23 +14,30 @@ class App extends Component {
   }
 
   inputTask = (e) => {
-    this.setState({
+    this.setState((state) => ({
       newTask: {
         text: e.target.value,
-        id: this.state.newTask.id,
+        id: state.newTask.id,
       }
-    }); 
+    })); 
   };
 
   submitTask = (e) => {
     e.preventDefault();
-    this.setState({
-        tasks: this.state.tasks.concat(this.state.newTask),
+    this.setState((state) => ({
+        tasks: [...state.tasks, state.newTask],
         newTask: {
           text: '',
           id: crypto.randomUUID(),
         },
-    });
+    }));
+  };
+
+  deleteTask = (id) => {
+    console.log(`deleteTask ${id}`);
+    this.setState((state) => ({
+      tasks: state.tasks.filter((task) => task.id !== id), 
+    }));
   };
 
   render() {
@@ -44,7 +51,7 @@ class App extends Component {
           <button>Submit</button>
         </form>
         <div className="inputOut">{newTask.text}</div>
-        <Overview tasks = {tasks}/>
+        <Overview tasks={tasks} onDelete={this.deleteTask}/>
       </div>
     );
   }
